@@ -1,11 +1,26 @@
-import re
-import sys
+# coding:utf-8
+from decimal import Decimal
+
 
 class Design:
     """这是Design类，被用来存放读取到的design数据
 
     """
-    pass
+    def __init__(self, name, lower_left_x, lower_left_y, upper_right_x, upper_right_y, polygon_count, md5sum):
+        self.mame = name
+        self.lower_left_x = Decimal(lower_left_x) / Decimal("1000")
+        self.lower_left_y = Decimal(lower_left_y) / Decimal("1000")
+        self.upper_right_x = Decimal(upper_right_x) / Decimal("1000")
+        self.upper_right_y = Decimal(upper_right_y) / Decimal("1000")
+        self.polygon_count = Decimal(polygon_count)
+        self.md5sum = md5sum
+        self.area_width = Decimal(upper_right_x) - Decimal(lower_left_x)
+        self.area_length = Decimal(upper_right_y) - Decimal(lower_left_y)
+        self.area = Decimal(self.area_width) * Decimal(self.area_length)
+        self.density = Decimal(self.polygon_count) / Decimal(self.area)
+        # print(self.area_width)
+        # print(self.area_length)
+        # print(self.area)
 
 
 class Library:
@@ -23,9 +38,9 @@ class Library:
 
         :return:
         """
-        self.design_list.pop(design_object)
+        self.design_list.append(design_object)
 
-    def print_reverse_by_density():
+    def print_reverse_by_density(self):
         """
 
         :return:
@@ -37,8 +52,8 @@ class ReadDataIter:
     """
 
     """
-    def __init__(self):
-        self.file_pointer = open("./testdata.txt", "r")
+    def __init__(self, path):
+        self.file_pointer = open(path, "r")
 
     def __iter__(self):
         return self
@@ -53,20 +68,30 @@ class ReadDataIter:
             return line
 
 
-def read_data_from_file():
-    """读取数据的函数，数据应位于./testdata.txt文件内，返回一个字符串对象
+def store_design_objects(library_objects, path="./testdata.txt"):
+    """
 
     :return:
     """
-    # with open("./testdata.txt", "r") as file_pointer:
-    #     line = " "
-    #     while line != "":
-    #         line = file_pointer.readline()
-    #         print(line, end="")
+    for design in ReadDataIter(path):
+        if design == "name	lower left x (um)	lower left y (um)	" \
+                     "upper right x (um)	upper right y (um)	polygo" \
+                     "n count	md5sum\n":
+            continue
+        else:
+            list_of_design = design.split()
+            library.add_design((Design(list_of_design[0], list_of_design[1], list_of_design[2],
+                                       list_of_design[3], list_of_design[4], list_of_design[5],
+                                       list_of_design[6])))
+
+
+
 
 
 
 if __name__ == '__main__':
-    for i in ReadDataIter():
-        print(i)
+    library = Library()
+    store_design_objects(library)
+    print(library.design_list)
+    library.print_reverse_by_density()
 

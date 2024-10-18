@@ -7,7 +7,7 @@ class Design:
 
     """
     def __init__(self, name, lower_left_x, lower_left_y, upper_right_x, upper_right_y, polygon_count, md5sum):
-        self.mame = name
+        self.name = name
         self.lower_left_x = Decimal(lower_left_x) / Decimal("1000")
         self.lower_left_y = Decimal(lower_left_y) / Decimal("1000")
         self.upper_right_x = Decimal(upper_right_x) / Decimal("1000")
@@ -45,7 +45,9 @@ class Library:
 
         :return:
         """
-        pass
+        reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
+        for design in reversed_list:
+            print(design.name)
 
 
 class ReadDataIter:
@@ -92,6 +94,5 @@ def store_design_objects(library_objects, path="./testdata.txt"):
 if __name__ == '__main__':
     library = Library()
     store_design_objects(library)
-    print(library.design_list)
     library.print_reverse_by_density()
 

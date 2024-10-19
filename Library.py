@@ -5,7 +5,7 @@ from decimal import Decimal
 class Design:
     """This is the Design class, which is used to store the read design data.
 
-    A Design object of the Design class stores 11 variables.
+    A Design object of the Design class stores 11 variables. Adopt Decimal module for precise calculations.
 
     Attributes:
         name: the name of the Design in str.
@@ -41,7 +41,9 @@ class Design:
         self.lower_left_y = Decimal(lower_left_y) / Decimal("1000")
         self.upper_right_x = Decimal(upper_right_x) / Decimal("1000")
         self.upper_right_y = Decimal(upper_right_y) / Decimal("1000")
-        # Conversion of micrometres to millimetres
+        # Adopt Decimal module for precise calculations.
+        # Conversion of micrometres to millimetres.
+
 
         self.polygon_count = Decimal(polygon_count)
         self.md5sum = md5sum
@@ -50,7 +52,7 @@ class Design:
         self.area_width = Decimal(upper_right_y) - Decimal(lower_left_y)
         self.area = Decimal(self.area_width) * Decimal(self.area_length)
         self.density = Decimal(self.polygon_count) / Decimal(self.area)
-        # Calculate length width, area and density
+        # Calculate length width, area and density.
 
 
 class Library:
@@ -72,13 +74,19 @@ class Library:
         self.design_list.append(design_object)
 
     def print_reverse_by_density(self) -> None:
-        """Prints the name attribute of Design instances in reverse order of instances."""
+        """Prints the name attribute of Design instances in reverse order of instances.
+
+            Internal calculations are done using exact Decimal types,
+            and the output is rounded to a more aesthetically pleasing output.
+        """
 
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         # Sort by density in reverse order.
 
+        print("{0:15}Density".format("Name"))
         for design in reversed_list:
-            print(design.name)
+            print("{0:15}{1}".format(design.name, design.density.quantize(Decimal("0.00000"))))
+            # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
             # Print content.
 
     @classmethod
@@ -86,7 +94,7 @@ class Library:
         """Prints the name attribute of Design instances in reverse order of instances."""
         reversed_list = sorted(library_object.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         for design in reversed_list:
-            print(design.name)
+            print(design.name, design.density, sep="\t")
 
 
 class ReadDataIter:
@@ -153,6 +161,7 @@ def store_design_objects(library_objects: Library, path: str = "./testdata.txt")
 
 
 if __name__ == '__main__':
+    print("Here are the Designs sorted by density from largest to smallest:")
     library = Library()
     # Creating Library Object.
 

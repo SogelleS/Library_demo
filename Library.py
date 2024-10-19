@@ -176,7 +176,7 @@ if __name__ == '__main__':
     library = Library()
     # Creating Library Object.
     try:
-        store_design_objects(library, path="testdata_2.txt")
+        store_design_objects(library, path="testdata.txt")
         # Read and store Design objects.
     except FileNotFoundError:
         print("The testdata.txt file does not exist, please place the testdata.txt file in your working directory.")

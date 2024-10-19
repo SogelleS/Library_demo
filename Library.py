@@ -44,13 +44,17 @@ class Design:
         self.upper_right_y = Decimal(upper_right_y) / Decimal("1000")
         self.polygon_count = Decimal(polygon_count)
         self.md5sum = md5sum
+
         self.area_length = Decimal(upper_right_x) - Decimal(lower_left_x)   # 计算长度
         self.area_width = Decimal(upper_right_y) - Decimal(lower_left_y)    # 计算宽度
         self.area = Decimal(self.area_width) * Decimal(self.area_length)    # 计算面积
         self.density = Decimal(self.polygon_count) / Decimal(self.area)     # 计算密度
-        # print(self.area_width)
-        # print(self.area_length)
-        # print(self.area)
+
+
+        self.area_width = Decimal(upper_right_x) - Decimal(lower_left_x)
+        self.area_length = Decimal(upper_right_y) - Decimal(lower_left_y)
+        self.area = Decimal(self.area_width) * Decimal(self.area_length)
+        self.density = Decimal(self.polygon_count) / Decimal(self.area)
 
 
 class Library:
@@ -77,6 +81,13 @@ class Library:
         """按密度倒序打印Design实例的名字属性"""
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         # 用密度倒序排序
+        for design in reversed_list:
+            print(design.name)
+
+    @classmethod
+    def print_reverse_by_density_class_method(cls, library_object) -> None:
+        """按密度倒序打印Design实例的名字属性"""
+        reversed_list = sorted(library_object.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         for design in reversed_list:
             print(design.name)
 
@@ -117,7 +128,7 @@ class ReadDataIter:
             return line
 
 
-def store_design_objects(library_objects: Library, path: str ="./testdata.txt") -> None:
+def store_design_objects(library_objects: Library, path: str = "./testdata.txt") -> None:
     """读取testdata.txt中的数据并存储到Library的一个实例中
 
     args:
@@ -132,16 +143,14 @@ def store_design_objects(library_objects: Library, path: str ="./testdata.txt") 
         else:
             list_of_design = design.split()
             # 字符串拆分,用空格或者制表符拆分
+
             library_objects.add_design(Design(*list_of_design))
             # Design对象添加到Library实例中
             # print(list_of_design)
 
 
 if __name__ == '__main__':
-    library = Library()
-    # 创建library对象
-    store_design_objects(library)
-    # 读取和存储Design对象
-    library.print_reverse_by_density()
-    # 打印按密度倒序排序的名字
+    library = Library()             # 创建library对象
+    store_design_objects(library)   # 读取和存储Design对象
+    library.print_reverse_by_density()  # 打印按密度倒序排序的名字
 

@@ -3,154 +3,161 @@ from decimal import Decimal
 
 
 class Design:
-    """这是Design类，被用来存放读取到的design数据
+    """This is the Design class, which is used to store the read design data.
 
-    Design类的一个Design对象储存了11个变量
+    A Design object of the Design class stores 11 variables.
 
     Attributes:
-        name: 字符串格式的Design名字
-        lower_left_x: 左下角点的x坐标 mm
-        lower_left_y: 左下角点的y坐标 mm
-        upper_right_x: 右上角点的x坐标 mm
-        upper_right_y: 右上角点的y坐标 mm
-        polygon_count: 多边形数量
-        md5sum: md5sum
-        area_length: 区域长度 mm
-        area_width: 区域宽度 mm
-        area: 区域面积 mm^2
-        density: 多边形密度 polygons per mm^2
-
+        name: the name of the Design in str.
+        lower_left_x: x-coordinate of the lower left point (mm).
+        lower_left_y: y-coordinate of the lower-left point (mm).
+        upper_right_x: x-coordinate of the upper right point (mm).
+        upper_right_y: y-coordinate of the upper right point (mm).
+        polygon_count: number of polygons.
+        md5sum: md5sum.
+        area_length: length of the area (mm).
+        area_width: width of the area (mm).
+        area: area size (mm^2).
+        density:  polygon density (polygons per mm^2).
     """
 
     def __init__(self, name: str, lower_left_x: str, lower_left_y: str,
                  upper_right_x: str, upper_right_y: str, polygon_count: str,
                  md5sum: str) -> None:
-        """Initialise instances based on incoming parameters
+        """Initialise instances based on incoming parameters.
 
         args:
-            name: 字符串格式的Design名字
-            lower_left_x: 左下角点的x坐标
-            lower_left_y: 左下角点的y坐标
-            upper_right_x: 右上角点的x坐标
-            upper_right_y: 右上角点的y坐标
-            polygon_count: 多边形数量
-            md5sum: md5sum
+            name: the name of the Design in str.
+            lower_left_x: x-coordinate of the lower left point (mm).
+            lower_left_y: y-coordinate of the lower-left point (mm).
+            upper_right_x: x-coordinate of the upper right point (mm).
+            upper_right_y: y-coordinate of the upper right point (mm).
+            polygon_count: number of polygons.
+            md5sum: md5sum.
         """
 
         self.name = name
-        self.lower_left_x = Decimal(lower_left_x) / Decimal("1000")     # 微米转换为毫米
+        self.lower_left_x = Decimal(lower_left_x) / Decimal("1000")
         self.lower_left_y = Decimal(lower_left_y) / Decimal("1000")
         self.upper_right_x = Decimal(upper_right_x) / Decimal("1000")
         self.upper_right_y = Decimal(upper_right_y) / Decimal("1000")
+        # Conversion of micrometres to millimetres
+
         self.polygon_count = Decimal(polygon_count)
         self.md5sum = md5sum
 
-        self.area_length = Decimal(upper_right_x) - Decimal(lower_left_x)   # 计算长度
-        self.area_width = Decimal(upper_right_y) - Decimal(lower_left_y)    # 计算宽度
-        self.area = Decimal(self.area_width) * Decimal(self.area_length)    # 计算面积
-        self.density = Decimal(self.polygon_count) / Decimal(self.area)     # 计算密度
-
-
-        self.area_width = Decimal(upper_right_x) - Decimal(lower_left_x)
-        self.area_length = Decimal(upper_right_y) - Decimal(lower_left_y)
+        self.area_length = Decimal(upper_right_x) - Decimal(lower_left_x)
+        self.area_width = Decimal(upper_right_y) - Decimal(lower_left_y)
         self.area = Decimal(self.area_width) * Decimal(self.area_length)
         self.density = Decimal(self.polygon_count) / Decimal(self.area)
+        # Calculate length width, area and density
 
 
 class Library:
-    """这是Library类，被用来存储所有的Design的实例并进行排序。
-
-    这是Library的类用来存储Design实例和实现按密度排序
+    """This is the Library class that is used to store and sort all instances of Design.
 
     Attributes:
-        design_list: 用来存储Design实例的列表
+        design_list: The list used to store Design instances.
     """
     def __init__(self) -> None:
-        """初始化Library对象,创建空的存储列表"""
+        """Initialise the Library object and create an empty storage list."""
         self.design_list = []
 
     def add_design(self, design_object: Design) -> None:
-        """将Design的实例添加到列表design_list中
+        """Add instances of Design to the list: design_list.
 
         args:
-            design_object: 需要添加的Design实例
+            design_object: Design instances to be added.
         """
         self.design_list.append(design_object)
 
     def print_reverse_by_density(self) -> None:
-        """按密度倒序打印Design实例的名字属性"""
+        """Prints the name attribute of Design instances in reverse order of instances."""
+
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
-        # 用密度倒序排序
+        # Sort by density in reverse order.
+
         for design in reversed_list:
             print(design.name)
+            # Print content.
 
     @classmethod
     def print_reverse_by_density_class_method(cls, library_object) -> None:
-        """按密度倒序打印Design实例的名字属性"""
+        """Prints the name attribute of Design instances in reverse order of instances."""
         reversed_list = sorted(library_object.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         for design in reversed_list:
             print(design.name)
 
 
 class ReadDataIter:
-    """创建一个可以迭代的文本读取迭代器
+    """Creating an iterable text reading iterator.
 
-    为了避免一次性读入过大的testdata.txt文件导致的内存占用过大,创建了一个可迭代类
+     In order to avoid the memory consumption caused by reading a large testdata.txt file at once,
+     an iterable class is created.
 
     Attributes:
-        file_pointer: 打开的文件指针
+        file_pointer: File pointer to an open file.
     """
     def __init__(self, path: str) -> None:
-        """初始化对象
+        """Initialising an iterable object.
 
-        path: testdata.txt文件位置
+        path: Path of testdata.txt file.
         """
         self.file_pointer = open(path, "r")
 
     def __iter__(self) -> iter:
-        """可迭代对象的iter方法"""
+        """Iter methods for iterable objects."""
         return self
 
     def __next__(self) -> str:
-        """可迭代对象的next方法
+        """Next method for iterable objects.
 
-        returns: 返回testdata.txt中的一行字符串数据
+        returns: Returns a line of string data from testdata.txt.
 
-        raise:结束迭代器
+        raise:End Iterator Flag.
         """
         line = self.file_pointer.readline()
+        # Read a line of text data (ending in \n).
 
         if line == "":
             self.file_pointer.close()
             raise StopIteration()
-            # 弹出迭代器
+            # End Iteration.
         else:
             return line
+            # Returns the contents of a line as a string.
 
 
 def store_design_objects(library_objects: Library, path: str = "./testdata.txt") -> None:
-    """读取testdata.txt中的数据并存储到Library的一个实例中
+    """Read the data in testdata.txt and store it in an instance of Library.
+
+    Note that the process of splitting a string first extracts a line of data,
+    and subsequently splits a line of data, taking the default split method (by space or \t or \n)
 
     args:
-        library_objects: 作为存储容器的Library实例
-        path: testdata.txt路径, 默认为当前目录下的testdata.txt
+        library_objects: Library instances as storage containers.
+        path: Path to testdata.txt, default is testdata.txt in current directory.
     """
     for design in ReadDataIter(path):
         if design == "name	lower left x (um)	lower left y (um)	" \
                      "upper right x (um)	upper right y (um)	polygon " \
                      "count	md5sum\n":
             continue
+            # Skip useless information.
         else:
             list_of_design = design.split()
-            # 字符串拆分,用空格或者制表符拆分
+            # String splitting, split by space or \t, \n.
 
             library_objects.add_design(Design(*list_of_design))
-            # Design对象添加到Library实例中
-            # print(list_of_design)
+            # Design object added to Library instance.
 
 
 if __name__ == '__main__':
-    library = Library()             # 创建library对象
-    store_design_objects(library)   # 读取和存储Design对象
-    library.print_reverse_by_density()  # 打印按密度倒序排序的名字
+    library = Library()
+    # Creating Library Object.
 
+    store_design_objects(library)
+    # Read and store Design objects.
+
+    library.print_reverse_by_density()
+    # Print names in reverse density order

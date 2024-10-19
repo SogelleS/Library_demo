@@ -37,21 +37,19 @@ class Design:
         """
 
         self.name = name
-        self.lower_left_x = Decimal(lower_left_x) / Decimal("1000")
-        self.lower_left_y = Decimal(lower_left_y) / Decimal("1000")
-        self.upper_right_x = Decimal(upper_right_x) / Decimal("1000")
-        self.upper_right_y = Decimal(upper_right_y) / Decimal("1000")
+        self.lower_left_x = Decimal(lower_left_x) / Decimal(1000)
+        self.lower_left_y = Decimal(lower_left_y) / Decimal(1000)
+        self.upper_right_x = Decimal(upper_right_x) / Decimal(1000)
+        self.upper_right_y = Decimal(upper_right_y) / Decimal(1000)
         # Adopt Decimal module for precise calculations.
         # Conversion of micrometres to millimetres.
 
-
         self.polygon_count = Decimal(polygon_count)
         self.md5sum = md5sum
-
-        self.area_length = Decimal(upper_right_x) - Decimal(lower_left_x)
-        self.area_width = Decimal(upper_right_y) - Decimal(lower_left_y)
-        self.area = Decimal(self.area_width) * Decimal(self.area_length)
-        self.density = Decimal(self.polygon_count) / Decimal(self.area)
+        self.area_width = self.upper_right_x - self.lower_left_x
+        self.area_length = self.upper_right_y - self.lower_left_y
+        self.area = self.area_length * self.area_width
+        self.density = self.polygon_count / self.area
         # Calculate length width, area and density.
 
 
@@ -78,12 +76,14 @@ class Library:
 
             Internal calculations are done using exact Decimal types,
             and the output is rounded to a more aesthetically pleasing output.
+            The name is not recommended to be more than 15 characters
+            otherwise it will affect the beautiful output.
         """
 
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         # Sort by density in reverse order.
 
-        print("{0:15}Density".format("Name"))
+        print("{0:15}Density (polygons per mm^2)".format("Name"))
         for design in reversed_list:
             print("{0:15}{1}".format(design.name, design.density.quantize(Decimal("0.00000"))))
             # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
@@ -91,10 +91,22 @@ class Library:
 
     @classmethod
     def print_reverse_by_density_class_method(cls, library_object) -> None:
-        """Prints the name attribute of Design instances in reverse order of instances."""
+        """Prints the name attribute of Design instances in reverse order of instances.
+
+            Internal calculations are done using exact Decimal types,
+            and the output is rounded to a more aesthetically pleasing output.
+            The name is not recommended to be more than 15 characters
+            otherwise it will affect the beautiful output.
+        """
+
         reversed_list = sorted(library_object.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
+        # Sort by density in reverse order.
+
+        print("{0:15}Density".format("Name"))
         for design in reversed_list:
-            print(design.name, design.density, sep="\t")
+            print("{0:15}{1}".format(design.name, design.density.quantize(Decimal("0.00000"))))
+            # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
+            # Print content.
 
 
 class ReadDataIter:
@@ -149,7 +161,7 @@ def store_design_objects(library_objects: Library, path: str = "./testdata.txt")
     for design in ReadDataIter(path):
         if design == "name	lower left x (um)	lower left y (um)	" \
                      "upper right x (um)	upper right y (um)	polygon " \
-                     "count	md5sum\n":
+                     "count	md5sum\n" or design == "\n":
             continue
             # Skip useless information.
         else:
@@ -161,12 +173,17 @@ def store_design_objects(library_objects: Library, path: str = "./testdata.txt")
 
 
 if __name__ == '__main__':
-    print("Here are the Designs sorted by density from largest to smallest:")
     library = Library()
     # Creating Library Object.
-
-    store_design_objects(library)
-    # Read and store Design objects.
-
+    try:
+        store_design_objects(library, path="testdata_2.txt")
+        # Read and store Design objects.
+    except FileNotFoundError:
+        print("The testdata.txt file does not exist, please place the testdata.txt file in your working directory.")
+        exit(1)
+    except TypeError:
+        print("Please check the format of the testdata.txt file")
+        exit(1)
+    print("Here are the Designs sorted by density from largest to smallest:")
     library.print_reverse_by_density()
     # Print names in reverse density order

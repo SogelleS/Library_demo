@@ -76,10 +76,10 @@ class Library:
     def print_reverse_by_density(self) -> None:
         """Prints the name attribute of Design instances in reverse order of instances.
 
-            Internal calculations are done using exact Decimal types,
-            and the output is rounded to a more aesthetically pleasing output.
-            The name is not recommended to be more than 15 characters
-            otherwise it will affect the beautiful output.
+        Internal calculations are done using exact Decimal types,
+        and the output is rounded to a more aesthetically pleasing output.
+        The name is not recommended to be more than 15 characters
+        otherwise it will affect the beautiful output.
         """
 
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)

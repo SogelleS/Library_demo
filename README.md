@@ -17,7 +17,7 @@ This is a simple programme that implements the following features：
 #### <b>operating environment</b>
 - Windows 10 22H2 x64
 - PyCharm Community Edition 2022.3.2
-- Python 3.9
+- Python 3.9.10
 
 #### <b>Execution results</b>
 ![](./results.png)

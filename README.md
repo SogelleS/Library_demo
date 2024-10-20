@@ -22,7 +22,7 @@ This is a simple programme that implements the following features：
 #### <b>Execution results</b>
 ![](./results.png)
 
-To test this application use the following command：
+<b>To test this application use the following command:</b>
 ```shell
 git clone https://github.com/SogelleS/Library_demo.git
 ```

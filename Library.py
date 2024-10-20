@@ -46,11 +46,12 @@ class Design:
 
         self.polygon_count = Decimal(polygon_count)
         self.md5sum = md5sum
+
         self.area_width = self.upper_right_x - self.lower_left_x
         self.area_length = self.upper_right_y - self.lower_left_y
         self.area = self.area_length * self.area_width
         self.density = self.polygon_count / self.area
-        # Calculate length width, area and density.
+        # Calculate length, width, area and density.
 
 
 class Library:
@@ -59,6 +60,7 @@ class Library:
     Attributes:
         design_list: The list used to store Design instances.
     """
+
     def __init__(self) -> None:
         """Initialise the Library object and create an empty storage list."""
         self.design_list = []
@@ -83,9 +85,9 @@ class Library:
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         # Sort by density in reverse order.
 
-        print("{0:15}Density (polygons per mm^2)".format("Name"))
+        print("{0:15} Density (polygons per mm^2)".format("Name"))
         for design in reversed_list:
-            print("{0:15}{1}".format(design.name, design.density.quantize(Decimal("0.00000"))))
+            print("{0:15} {1:>15}".format(design.name, design.density.quantize(Decimal("0.00000"))))
             # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
             # Print content.
 
@@ -93,18 +95,21 @@ class Library:
     def print_reverse_by_density_class_method(cls, library_object) -> None:
         """Prints the name attribute of Design instances in reverse order of instances.
 
-            Internal calculations are done using exact Decimal types,
-            and the output is rounded to a more aesthetically pleasing output.
-            The name is not recommended to be more than 15 characters
-            otherwise it will affect the beautiful output.
+        Internal calculations are done using exact Decimal types,
+        and the output is rounded to a more aesthetically pleasing output.
+        The name is not recommended to be more than 15 characters
+        otherwise it will affect the beautiful output.
+
+        args:
+        library_object: Library instances as storage containers.
         """
 
         reversed_list = sorted(library_object.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         # Sort by density in reverse order.
 
-        print("{0:15}Density".format("Name"))
+        print("{0:15} Density".format("Name"))
         for design in reversed_list:
-            print("{0:15}{1}".format(design.name, design.density.quantize(Decimal("0.00000"))))
+            print("{0:15} {1:>15}".format(design.name, design.density.quantize(Decimal("0.00000"))))
             # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
             # Print content.
 
@@ -112,8 +117,8 @@ class Library:
 class ReadDataIter:
     """Creating an iterable text reading iterator.
 
-     In order to avoid the memory consumption caused by reading a large testdata.txt file at once,
-     an iterable class is created.
+    In order to avoid the memory consumption caused by reading a large testdata.txt file at once,
+    an iterable class is created.
 
     Attributes:
         file_pointer: File pointer to an open file.
@@ -148,7 +153,7 @@ class ReadDataIter:
             # Returns the contents of a line as a string.
 
 
-def store_design_objects(library_objects: Library, path: str = "./testdata.txt") -> None:
+def store_design_objects(library_object: Library, path: str = "./testdata.txt") -> None:
     """Read the data in testdata.txt and store it in an instance of Library.
 
     Note that the process of splitting a string first extracts a line of data,
@@ -168,7 +173,7 @@ def store_design_objects(library_objects: Library, path: str = "./testdata.txt")
             list_of_design = design.split()
             # String splitting, split by space or \t, \n.
 
-            library_objects.add_design(Design(*list_of_design))
+            library_object.add_design(Design(*list_of_design))
             # Design object added to Library instance.
 
 

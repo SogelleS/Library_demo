@@ -2,7 +2,7 @@
 This is a simple programme that implements the following features：
 
 1. Create a class called Design with (at least) the following attributes: lower left x, lower left y, upper right x, upper right y, polygon count, md5sum, area, and density (polygons per mm^2).
-2. Create a class called Library that will store all of the instances of the Design class- you can choose how to store it.
+2. Create a class called Library that will store all the instances of the Design class you can choose how to store it.
 3. Create a method for the Library class that will print the names of all designs ordered by density (high to low).
 4. Read in the test data, create an instance of design for each row, and store each Design instance into one instance of the Library.
 5. Finally, call the Library method that prints the ordered list.

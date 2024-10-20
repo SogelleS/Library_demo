@@ -8,10 +8,10 @@ This is a simple programme that implements the following features：
 5. Finally, call the Library method that prints the ordered list.
 
 #### <b>Structure of the project</b>
-./.idea: save PyCharm configuration file.
-Library.py: Python source code.
-testdata.txt: A data file containing data.
-testdata_2.txt: A data file containing error data that is used to test the stability of the program. In a typical application scenario we are trusting the data source. In this programme testdata.txt is used as data source.
+- ./.idea: save PyCharm configuration file.
+- Library.py: Python source code.
+- testdata.txt: A data file containing data.
+- testdata_2.txt: A data file containing error data that is used to test the stability of the program. In a typical application scenario we are trusting the data source. In this programme testdata.txt is used as data source.
 
 #### <b>operating environment</b>
 - Windows 10 22H2 x64

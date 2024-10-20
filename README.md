@@ -1,6 +1,6 @@
 ### <b>Library demo</b>
 
-#### <b>Introductory</b>
+#### <b>Introduction</b>
 This is a simple programme that implements the following features：
 
 1. Create a class called Design with (at least) the following attributes: lower left x, lower left y, upper right x, upper right y, polygon count, md5sum, area, and density (polygons per mm^2).

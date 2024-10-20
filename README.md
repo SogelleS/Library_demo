@@ -1,4 +1,6 @@
 ### <b>Library demo</b>
+
+#### <b>Introductory</b>
 This is a simple programme that implements the following features：
 
 1. Create a class called Design with (at least) the following attributes: lower left x, lower left y, upper right x, upper right y, polygon count, md5sum, area, and density (polygons per mm^2).
@@ -14,7 +16,7 @@ This is a simple programme that implements the following features：
 - testdata_2.txt: A data file containing error data that is used to test the stability of the program. In a typical application scenario we are trusting the data source. In this programme testdata.txt is used as data source.
 - README.md: This Markdown file.
 
-#### <b>operating environment</b>
+#### <b>Operating environment</b>
 - Windows 10 22H2 x64
 - PyCharm Community Edition 2022.3.2
 - Python 3.9.10

@@ -12,17 +12,17 @@ This is a simple programme that implements the following features：
 - Library.py: Python source code.
 - testdata.txt: A data file containing data.
 - testdata_2.txt: A data file containing error data that is used to test the stability of the program. In a typical application scenario we are trusting the data source. In this programme testdata.txt is used as data source.
+- README.md: This Markdown file.
 
 #### <b>operating environment</b>
 - Windows 10 22H2 x64
-- PyCharm 2022 Community Edition 2022.3.2
+- PyCharm Community Edition 2022.3.2
 - Python 3.9
-  
-To test this application use the following command：
 
 #### <b>Execution results</b>
 ![](./results.png)
 
+To test this application use the following command：
 ```shell
 git clone https://github.com/SogelleS/Library_demo.git
 ```

@@ -85,29 +85,7 @@ class Library:
         reversed_list = sorted(self.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
         # Sort by density in reverse order.
 
-        print("{0:15} Density (polygons per mm^2)".format("Name"))
-        for design in reversed_list:
-            print("{0:15} {1:>15}".format(design.name, design.density.quantize(Decimal("0.00000"))))
-            # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
-            # Print content.
-
-    @classmethod
-    def print_reverse_by_density_class_method(cls, library_object) -> None:
-        """Prints the name attribute of Design instances in reverse order of instances.
-
-        Internal calculations are done using exact Decimal types,
-        and the output is rounded to a more aesthetically pleasing output.
-        The name is not recommended to be more than 15 characters
-        otherwise it will affect the beautiful output.
-
-        args:
-        library_object: Library instances as storage containers.
-        """
-
-        reversed_list = sorted(library_object.design_list, key=lambda design_lambda: design_lambda.density, reverse=True)
-        # Sort by density in reverse order.
-
-        print("{0:15} Density".format("Name"))
+        print("{0:15} Density (polygons per mm^2)\n".format("Name"))
         for design in reversed_list:
             print("{0:15} {1:>15}".format(design.name, design.density.quantize(Decimal("0.00000"))))
             # print(design.name, design.density.quantize(Decimal("0.00000")), sep="\t")
